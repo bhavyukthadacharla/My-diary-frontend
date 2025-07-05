@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Full Post</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Sofia&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="dedicated page.css">
+</head>
+
+<body>
+
+  <!-- Header Navigation -->
+  <div class="d-flex justify-content-between align-items-center px-4 pt-3">
+    <a href="feedPage.html" class="btn back-button">← Back</a>
+    <a href="login.html" class="btn logout-button">Logout</a>
+  </div>
+
+  <!-- Post Content Container -->
+  <div class="d-flex justify-content-center mt-3 px-3">
+    <div class="post-container">
+      <h1 id="postTitle">Post Title</h1>
+      <p id="postDescription">Post Description</p>
+    </div>
+  </div>
+
+  <!-- Script to Load Dynamic Post -->
+  <script>
+    function getQueryParam(key) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(key);
+    }
+
+    const title = getQueryParam("title");
+    const description = getQueryParam("description");
+
+    document.getElementById("postTitle").textContent = decodeURIComponent(title || "No Title Provided");
+    document.getElementById("postDescription").textContent = decodeURIComponent(description || "No Content Available");
+  </script>
+
+</body>
+</html>
+
