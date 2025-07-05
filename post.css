@@ -35,7 +35,7 @@ body::before {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   position: absolute;
   top: 50%;
-  left: 0%;
+  left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
   animation: zoomIn 0.5s ease-out;  /* Optional: adds zoom-in effect */
