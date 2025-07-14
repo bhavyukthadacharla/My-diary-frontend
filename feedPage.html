@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Journal Feed</title>
+
+  <link rel="stylesheet" href="feedpage.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sofia&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top right buttons -->
+  <div class="top-right-buttons">
+    <button class="action-btn" onclick="location.href='Post.html'">New Post</button>
+    <button class="action-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>YOUR POSTS 📝</h1>
+  </div>
+
+  <!-- Posts container -->
+  <div class="content" id="postsContainer">
+
+    <!-- Message for no posts -->
+    <div id="noPosts" class="no-posts-container d-none">
+      <p class="no-posts-text">No posts yet, start your journaling right now!</p>
+      <a href="Post.html" class="create-post-btn">Create First Post</a>
+    </div>
+
+    <!-- Posts will be added here -->
+    <div id="postsList"></div>
+  </div>
+
+  <script>
+    const userID = localStorage.getItem("userID");
+    const noPosts = document.getElementById("noPosts");
+    const postsList = document.getElementById("postsList");
+
+    function getPreview(text, charLimit) {
+      if (text.length <= charLimit) return text;
+      return text.slice(0, charLimit) + "...";
+    }
+
+    fetch(`https://my-diary-backend-1hnp.onrender.com/getMyPosts?userID=${encodeURIComponent(userID)}`)
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to load posts");
+        return res.json();
+      })
+      .then(posts => {
+        if (!posts || posts.length === 0) {
+          noPosts.classList.remove("d-none");
+          return;
+        }
+
+        noPosts.classList.add("d-none");
+        postsList.innerHTML = "";
+
+        posts.forEach(post => {
+          const postCard = document.createElement("div");
+          postCard.className = "Post";
+          postCard.innerHTML = `
+            <h2>${post.postTitle}</h2>
+            <p>${getPreview(post.postDescription, 150)}</p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <a href="dedicated page.html?title=${encodeURIComponent(post.postTitle)}&description=${encodeURIComponent(post.postDescription)}" class="viewpost">View Full Post</a>
+              <a href="Post.html?edit=true&title=${encodeURIComponent(post.postTitle)}&description=${encodeURIComponent(post.postDescription)}" class="viewpost">Edit Post</a>
+              <button class="delete-btn" data-id="${post.ID}">Delete Post</button>
+            </div>
+          `;
+          postsList.appendChild(postCard);
+        });
+
+        // Add delete event listeners
+        document.querySelectorAll('.delete-btn').forEach(button => {
+          button.addEventListener('click', () => {
+            const postID = button.getAttribute('data-id');
+            console.log("🗑️ Deleting post ID:", postID); // Debugging log
+            if (confirm("Are you sure you want to delete this post?")) {
+              fetch(`https://my-diary-backend-1hnp.onrender.com/deletePost?postID=${encodeURIComponent(postID)}`, {
+                method: 'DELETE'
+              })
+              .then(res => {
+                if (!res.ok) throw new Error("Delete failed");
+                return res.json();
+              })
+              .then(() => {
+                alert("Post deleted successfully");
+                location.reload(); // Refresh list
+              })
+              .catch(err => {
+                console.error("❌ Error deleting post:", err);
+                alert("Could not delete post.");
+              });
+            }
+          });
+        });
+      })
+      .catch(err => {
+        console.error("⚠️ Error fetching posts:", err);
+        alert("Could not load posts.");
+      });
+
+    function logout() {
+      localStorage.removeItem("userID");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+
+

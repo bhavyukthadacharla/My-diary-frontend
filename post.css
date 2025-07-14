@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
+
+body {
+  font-family: 'Sofia', sans-serif;
+  background-color: #f9e0f3;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Soft background handwriting image */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url('post2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5; /* Light transparency */
+  z-index: -1;
+}
+
+/* ✅ Your original post container box */
+.formDiv {
+  width: 95%;
+  max-width: 850px;          /* Increased width */
+  padding: 60px;             /* More internal spacing */
+  background: #f9e0f3;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  animation: zoomIn 0.5s ease-out;  /* Optional: adds zoom-in effect */
+}
+
+.back-button {
+  position: absolute;
+  top: 80px; /* 👈 Moves it further down from the top */
+  left: 40px;
+  background-color: #f8d6eb;
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 10px;
+  color: black; /* 👈 Makes the text black instead of blue */
+  text-decoration: none; /* 👈 Removes underline */
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  animation: zoomIn 0.5s ease-out;
+}
+
+.back-button:hover {
+  background-color: #f2bcd6;
+  color: black;
+}
+
+
+/* Post button */
+#postButton {
+  background-image: linear-gradient(to right, rgb(234, 214, 230), rgb(255, 230, 250));
+  color: black;
+  font-weight: bold;
+  font-family: 'Sofia', sans-serif;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.2),
+    0 6px 12px rgba(234, 214, 230, 0.3),
+    0 10px 15px rgba(255, 230, 250, 0.2);
+  transition: transform 0.2s ease;
+}
+
+#postButton:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+  background-image: linear-gradient(to right, rgb(255, 230, 250), rgb(234, 214, 230));
+}
+
+/* Focus styles for inputs */
+input:focus, textarea:focus {
+  border-color: #d48fb1;
+  box-shadow: 0 0 0 0.2rem rgba(212, 143, 177, 0.25);
+}
+
