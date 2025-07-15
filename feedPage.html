@@ -67,7 +67,7 @@
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
               <a href="dedicated page.html?title=${encodeURIComponent(post.postTitle)}&description=${encodeURIComponent(post.postDescription)}" class="viewpost">View Full Post</a>
               <a href="Post.html?edit=true&title=${encodeURIComponent(post.postTitle)}&description=${encodeURIComponent(post.postDescription)}" class="viewpost">Edit Post</a>
-              <button class="delete-btn" data-id="${post.ID}">Delete Post</button>
+              <button class="delete-btn" data-id="${post._id}">Delete Post</button>
             </div>
           `;
           postsList.appendChild(postCard);
